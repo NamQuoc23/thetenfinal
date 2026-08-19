@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản trị · THE FINAL TEN</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap wrap--mid">
+        <h1 id="page-title"></h1>
+        <p id="page-lead"></p>
+      </div>
+    </section>
+
+    <section class="section-cream" style="padding-top:0">
+      <div class="wrap wrap--mid">
+
+        <div class="admin-section">
+          <h2>Thông tin giải</h2>
+          <form id="settings-form">
+            <div class="form-grid-2">
+              <div class="form-field"><label>Ngày giờ xuất phát</label><input type="datetime-local" id="s-datetime" /></div>
+              <div class="form-field"><label>Tên giải</label><input type="text" id="s-name" /></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field"><label>Địa điểm</label><input type="text" id="s-location" /></div>
+              <div class="form-field"><label>Cự ly (km)</label><input type="text" id="s-distance" /></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-field"><label>Độ cao tích lũy (m)</label><input type="text" id="s-elevation" /></div>
+              <div class="form-field"><label>Cut-off (giờ)</label><input type="text" id="s-cutoff" /></div>
+            </div>
+            <div class="form-field"><label>Ngày bắt đầu hành trình</label><input type="date" id="s-start" /></div>
+            <button type="submit" class="btn-small save">Lưu thông tin giải</button>
+          </form>
+        </div>
+
+        <div class="admin-section">
+          <h2>Thêm / sửa bài tập trong giáo án</h2>
+          <form id="plan-form">
+            <div class="admin-row">
+              <select id="p-runner" class="grow"></select>
+              <input type="date" id="p-date" class="grow" />
+              <select id="p-type">
+                <option value="workout">Buổi tập</option>
+                <option value="rest">Ngày nghỉ</option>
+              </select>
+            </div>
+            <div class="admin-row">
+              <input type="text" id="p-name" class="grow" placeholder="Tên bài (vd. Easy run)" />
+              <input type="number" id="p-km" step="0.1" placeholder="km" style="width:90px" />
+              <input type="number" id="p-min" step="1" placeholder="phút" style="width:90px" />
+              <input type="text" id="p-intensity" placeholder="Cường độ" style="width:140px" />
+            </div>
+            <button type="submit" class="btn-small save">Lưu bài tập</button>
+          </form>
+          <div id="plan-admin-list" style="margin-top:20px"></div>
+        </div>
+
+        <div class="admin-section">
+          <h2>Các mốc — Road to 27.12</h2>
+          <div id="milestones-list"></div>
+        </div>
+
+        <div class="admin-section">
+          <h2>Kết quả ngày thi</h2>
+          <div id="results-form"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

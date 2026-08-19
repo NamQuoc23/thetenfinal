@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE FINAL TEN · Đăng nhập</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="login-wrap">
+    <div class="login-card">
+      <p class="eyebrow" style="text-align:center">THE FINAL TEN</p>
+      <h1 class="login-title">MÌNH LÀ AI TRONG LỜI HẸN NÀY?</h1>
+      <p class="login-sub">Chọn tên của mình để xem đúng phần việc hôm nay.</p>
+      <div class="login-grid" id="runner-picker"></div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { getRunners, setCurrentRunnerId, seedDemoDataIfEmpty } from "./js/store.js";
+
+    seedDemoDataIfEmpty();
+
+    const params = new URLSearchParams(location.search);
+    const next = params.get("next") || "index.html";
+
+    const picker = document.getElementById("runner-picker");
+    for (const r of getRunners()) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "login-btn";
+      btn.innerHTML = `<span class="name">${r.full_name.toUpperCase()}</span><span class="hint">Bấm để vào</span>`;
+      btn.addEventListener("click", () => {
+        setCurrentRunnerId(r.id);
+        location.href = next;
+      });
+      picker.appendChild(btn);
+    }
+  </script>
+</body>
+</html>

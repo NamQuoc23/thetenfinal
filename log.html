@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ghi lại buổi tập · THE FINAL TEN</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap wrap--mid">
+        <h1 id="form-title"></h1>
+        <p id="form-lead"></p>
+      </div>
+    </section>
+
+    <section class="section-cream" style="padding-top:0">
+      <div class="wrap wrap--mid">
+        <form id="log-form" class="form-card">
+          <div class="form-field">
+            <label for="f-date">Ngày</label>
+            <input type="date" id="f-date" name="date" required />
+            <p class="hint" id="plan-hint"></p>
+          </div>
+
+          <div class="form-field">
+            <label for="f-status">Trạng thái buổi tập</label>
+            <select id="f-status" name="status">
+              <option value="completed">Đã hoàn thành</option>
+              <option value="adjusted">Đã điều chỉnh</option>
+              <option value="recovery">Nghỉ phục hồi (giảm bài vì đau)</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label id="lbl-upload"></label>
+            <div class="upload-box" id="upload-box">
+              <p id="upload-hint-text"></p>
+              <input type="file" id="f-photo" accept="image/*" style="display:none" />
+            </div>
+            <p class="hint" id="ai-note"></p>
+            <div class="upload-preview" id="upload-preview" style="display:none">
+              <img id="upload-preview-img" style="width:100%" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label id="lbl-actual"></label>
+              <input type="text" id="f-actual" name="actual_summary" />
+            </div>
+            <div class="form-field">
+              <label id="lbl-distance"></label>
+              <input type="number" step="0.1" min="0" id="f-distance" name="distance_km" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label id="lbl-duration"></label>
+              <input type="number" step="1" min="0" id="f-duration" name="duration_min" />
+            </div>
+            <div class="form-field">
+              <label id="lbl-pace"></label>
+              <input type="text" id="f-pace" name="avg_pace" placeholder="vd. 5:30/km" />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label id="lbl-hr"></label>
+              <input type="number" step="1" min="0" id="f-hr" name="avg_hr" />
+            </div>
+            <div class="form-field">
+              <label id="lbl-rpe"></label>
+              <input type="number" step="1" min="1" max="10" id="f-rpe" name="rpe" />
+              <p class="hint" id="rpe-hint"></p>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label id="lbl-pain"></label>
+              <input type="number" step="1" min="0" max="10" id="f-pain" name="pain_level" />
+            </div>
+            <div class="form-field">
+              <label id="lbl-pain-location"></label>
+              <input type="text" id="f-pain-location" name="pain_location" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>
+              <input type="checkbox" id="f-is-test" name="is_test" style="width:auto;display:inline-block;margin-right:8px" />
+              Đây là bài test / time trial / race
+            </label>
+          </div>
+
+          <div class="form-field">
+            <label id="lbl-notes"></label>
+            <textarea id="f-notes" name="notes"></textarea>
+          </div>
+
+          <div class="form-field">
+            <label id="lbl-link"></label>
+            <input type="url" id="f-link" name="activity_link" placeholder="https://..." />
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <button type="submit" class="btn btn-primary" id="btn-save"></button>
+            <button type="button" class="btn btn-outline-dark" id="btn-delete" style="display:none"></button>
+          </div>
+
+          <div id="form-message" style="display:none"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/log.js"></script>
+</body>
+</html>

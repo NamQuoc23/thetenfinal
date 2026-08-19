@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhật ký · THE FINAL TEN</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap wrap--mid">
+        <h1 id="page-title"></h1>
+        <p id="page-lead"></p>
+      </div>
+    </section>
+
+    <section class="section-cream" style="padding-top:0">
+      <div class="wrap wrap--mid">
+        <form id="journal-form" class="form-card">
+          <div class="form-field">
+            <label id="lbl-upload">Ảnh</label>
+            <div class="upload-box" id="upload-box">
+              <p id="upload-hint-text"></p>
+              <input type="file" id="f-photo" accept="image/*" style="display:none" />
+            </div>
+            <div class="upload-preview" id="upload-preview" style="display:none">
+              <img id="upload-preview-img" style="width:100%" />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="f-date">Ngày</label>
+            <input type="date" id="f-date" required />
+          </div>
+          <div class="form-field">
+            <label for="f-note" id="lbl-note">Ghi chú</label>
+            <textarea id="f-note"></textarea>
+            <p class="hint" id="prompt-hints"></p>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn-add"></button>
+        </form>
+
+        <div id="journal-list" style="margin-top:48px"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/journal.js"></script>
+</body>
+</html>

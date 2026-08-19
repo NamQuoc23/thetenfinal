@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thông tin giải · THE FINAL TEN</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .checklist-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-top:1px solid rgba(107,74,50,0.15); }
+    .checklist-item input { width:18px; height:18px; }
+    .checklist-item.done span { text-decoration: line-through; opacity: 0.5; }
+    .asset-figure { margin-top: 32px; }
+    .asset-figure img { border-radius: 12px; }
+    .asset-figure figcaption { margin-top: 8px; font-size: 12px; color: var(--earth); }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap wrap--mid">
+        <h1 id="page-title"></h1>
+        <p id="page-lead"></p>
+      </div>
+    </section>
+
+    <section class="section-cream" style="padding-top:0">
+      <div class="wrap wrap--mid">
+        <div class="runner-card">
+          <h3>LỊCH TRÌNH CHÍNH THỨC</h3>
+          <div id="schedule-rows" style="margin-top:16px"></div>
+        </div>
+
+        <div class="runner-card" style="margin-top:24px">
+          <h3>THÔNG SỐ</h3>
+          <div class="race-specs" id="specs" style="color:var(--earth-dark);margin-top:12px"></div>
+        </div>
+
+        <div class="runner-card" style="margin-top:24px">
+          <h3>CHECKLIST NGÀY THI</h3>
+          <div id="checklist" style="margin-top:8px"></div>
+        </div>
+
+        <figure class="asset-figure">
+          <img id="img-specs" alt="" />
+          <figcaption id="cap-specs"></figcaption>
+        </figure>
+        <figure class="asset-figure">
+          <img id="img-expo" alt="" />
+          <figcaption id="cap-expo"></figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/race-info.js"></script>
+</body>
+</html>
