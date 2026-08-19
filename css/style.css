@@ -901,12 +901,15 @@ table.metrics td:first-child, table.metrics th:first-child {
   background: rgba(28, 43, 35, 0.85);
 }
 .login-btn {
-  height: 180px;
-  border-radius: 18px;
-  border: 1px solid rgba(232, 165, 46, 0.35);
-  background: rgba(20, 15, 12, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  min-height: 132px;
+  border-radius: 8px;
+  border: 1px solid rgba(232, 165, 46, 0.58);
+  background:
+    linear-gradient(135deg, rgba(173, 36, 25, 0.72), rgba(20, 15, 12, 0.76)),
+    rgba(20, 15, 12, 0.68);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
   color: var(--cream);
   font-family: inherit;
   cursor: pointer;
@@ -914,21 +917,36 @@ table.metrics td:first-child, table.metrics th:first-child {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  transition: background-color 0.2s, border-color 0.2s;
+  gap: 12px;
+  padding: 22px;
+  text-transform: uppercase;
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .login-btn:hover {
-  background: rgba(173, 36, 25, 0.35);
-  border-color: rgba(232, 165, 46, 0.6);
+  transform: translateY(-2px);
+  background:
+    linear-gradient(135deg, rgba(173, 36, 25, 0.86), rgba(42, 18, 13, 0.82)),
+    rgba(20, 15, 12, 0.75);
+  border-color: rgba(232, 165, 46, 0.9);
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.36);
 }
-.login-btn .name { font-size: 1.2rem; font-weight: 800; letter-spacing: 0.02em; }
+.login-btn:focus-visible {
+  outline: 3px solid rgba(232, 165, 46, 0.72);
+  outline-offset: 4px;
+}
+.login-btn .name {
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  text-align: center;
+}
 .login-btn .hint {
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-weight: 900;
+  letter-spacing: 0.18em;
   color: var(--race-yellow);
 }
-.login-btn .hint { font-size: 13px; color: var(--cream-dim); }
 @media (max-width: 600px) {
   .login-grid { grid-template-columns: 1fr; }
 }
