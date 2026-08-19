@@ -9,9 +9,9 @@
 <body>
   <main class="login-wrap">
     <div class="login-card">
-      <p class="eyebrow" style="text-align:center">THE FINAL TEN</p>
-      <h1 class="login-title">MÌNH LÀ AI TRONG LỜI HẸN NÀY?</h1>
-      <p class="login-sub">Chọn tên của mình để xem đúng phần việc hôm nay.</p>
+      <p class="eyebrow" style="text-align:center">THE FINAL TEN · ROAD TO 27.12</p>
+      <h1 class="login-title">NGÀY HẸN ĐÃ ĐƯỢC VIẾT.<br />ĐOẠN KẾT THÌ CHƯA.</h1>
+      <p class="login-sub">Mười cây số cuối cùng của năm không được quyết định ở vạch xuất phát.<br />Nó được quyết định trong những ngày không ai nhìn thấy.</p>
       <div class="login-grid" id="runner-picker"></div>
     </div>
   </main>
@@ -29,7 +29,7 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "login-btn";
-      btn.innerHTML = `<span class="name">${r.full_name.toUpperCase()}</span><span class="hint">Bấm để vào</span>`;
+      btn.innerHTML = `<span class="name">${r.full_name.toUpperCase()}</span><span class="hint">VIẾT TIẾP</span>`;
       btn.addEventListener("click", () => {
         setCurrentRunnerId(r.id);
         location.href = next;

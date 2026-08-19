@@ -848,7 +848,13 @@ table.metrics td:first-child, table.metrics th:first-child {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--forest-dark);
+  background-color: var(--forest-dark);
+  background-image:
+    radial-gradient(ellipse at center, rgba(20, 15, 12, 0.8) 0%, rgba(20, 15, 12, 0.55) 38%, rgba(20, 15, 12, 0.2) 68%, rgba(20, 15, 12, 0.55) 100%),
+    url("../assets/login-bg.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
   padding: 60px 20px;
 }
 .login-card {
@@ -857,12 +863,14 @@ table.metrics td:first-child, table.metrics th:first-child {
 }
 .login-title {
   text-align: center;
-  font-size: 1.6rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.3;
   color: var(--cream);
-  margin-bottom: 8px;
+  margin-bottom: 20px;
 }
 .login-sub {
   text-align: center;
+  line-height: 1.6;
   color: var(--cream-dim);
   margin-bottom: 48px;
 }
