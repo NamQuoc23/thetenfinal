@@ -15,6 +15,8 @@
       <div class="login-grid" id="runner-picker"></div>
     </div>
   </main>
+  <audio id="login-music" src="assets/audio/login-music.mp3" preload="auto" autoplay playsinline></audio>
+  <button class="login-music-toggle" id="login-music-toggle" type="button" hidden>NHẠC</button>
 
   <script type="module">
     import { getRunners, setCurrentRunnerId, seedDemoDataIfEmpty } from "./js/store.js";
@@ -25,6 +27,25 @@
     const next = params.get("next") || "index.html";
 
     const picker = document.getElementById("runner-picker");
+    const loginMusic = document.getElementById("login-music");
+    const loginMusicToggle = document.getElementById("login-music-toggle");
+    loginMusic.volume = 0.65;
+
+    const playLoginMusic = () => {
+      loginMusic.play()
+        .then(() => {
+          loginMusicToggle.hidden = true;
+        })
+        .catch(() => {
+          loginMusicToggle.hidden = false;
+        });
+    };
+
+    playLoginMusic();
+    window.addEventListener("pointerdown", playLoginMusic, { once: true });
+    window.addEventListener("keydown", playLoginMusic, { once: true });
+    loginMusicToggle.addEventListener("click", playLoginMusic);
+
     for (const r of getRunners()) {
       const btn = document.createElement("button");
       btn.type = "button";
