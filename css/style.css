@@ -842,6 +842,127 @@ table.metrics td:first-child, table.metrics th:first-child {
 .plan-day .name { font-weight: 700; }
 .plan-day .detail { font-size: 13px; color: var(--earth); margin-top: 2px; }
 
+/* ---------- Mindset ---------- */
+.mindset-hero {
+  background:
+    linear-gradient(135deg, rgba(32, 28, 22, 0.94), rgba(124, 24, 16, 0.86)),
+    var(--ink);
+}
+.mindset-add-card,
+.mindset-empty,
+.featured-video,
+.video-card {
+  background: var(--cream-soft);
+  border: 1px solid rgba(107, 74, 50, 0.16);
+  border-radius: 8px;
+}
+.mindset-add-card {
+  padding: 24px;
+  margin-bottom: 28px;
+  display: grid;
+  gap: 18px;
+}
+.mindset-add-card h2,
+.mindset-section-title h2,
+.featured-copy h2 {
+  margin: 0;
+}
+.mindset-add-card p,
+.mindset-section-title p,
+.featured-copy p,
+.mindset-empty p {
+  color: var(--earth);
+  margin: 6px 0 0;
+}
+.mindset-form {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  gap: 12px;
+}
+.mindset-form input {
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(107, 74, 50, 0.28);
+  background: var(--cream);
+  color: var(--ink);
+  font: inherit;
+}
+.featured-video {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.8fr);
+  gap: 24px;
+  padding: 24px;
+  align-items: center;
+}
+.featured-frame,
+.video-thumb {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--ink);
+}
+.featured-frame iframe,
+.video-thumb iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.mindset-empty {
+  padding: 36px;
+  margin-bottom: 28px;
+}
+.mindset-empty h2 {
+  margin: 6px 0 0;
+}
+.mindset-section-title {
+  margin: 32px 0 16px;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.video-card {
+  overflow: hidden;
+}
+.video-thumb {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+.video-card-body {
+  padding: 18px;
+}
+.video-card-body h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.video-card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+.video-card-actions button {
+  border: 0;
+  background: transparent;
+  color: var(--race-red-dark);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0;
+}
+@media (max-width: 760px) {
+  .mindset-form,
+  .featured-video,
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- Login ---------- */
 .login-wrap {
   position: relative;

@@ -20,6 +20,7 @@ export function renderHeader(activePage) {
     ["plan.html", "Giáo án"],
     ["progress.html", "Tiến độ"],
     ["journal.html", "Nhật ký"],
+    ["mindset.html", "Mindset"],
     ["race-info.html", "Thông tin giải"],
     ["admin.html", "Quản trị"],
   ];
