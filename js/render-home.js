@@ -63,7 +63,6 @@ async function render() {
     renderWeeklyPromises(runnerMap, settings, today, planEntriesByRunner) +
     renderRoad() +
     renderNumbers(runnerMap, settings, today) +
-    renderJournalPreview(runnerMap) +
     renderRaceDay() +
     renderClosing();
 
@@ -412,44 +411,6 @@ function renderNumbers(runnerMap, settings, today) {
           </div>
         </div>
         <p class="test-line">${n.testLine}</p>
-      </div>
-    </div>
-  </section>`;
-}
-
-// ---------- Journal preview ----------
-function renderJournalPreview(runnerMap) {
-  const j = copy.journalSection;
-  const entries = store.getJournalEntries(undefined, 6);
-  const cardsHtml = entries
-    .slice(0, 3)
-    .map(
-      (e) => `
-      <div class="journal-card">
-        ${e.photo_path ? `<img src="${e.photo_path}" alt="" />` : ""}
-        <div class="pad">
-          <p class="meta">${esc(runnerMap[e.runner_id]?.short_name)} · ${formatDateVi(e.date)}</p>
-          ${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}
-        </div>
-      </div>`
-    )
-    .join("");
-
-  return `
-  <section class="section-earth-dark">
-    <div class="wrap wrap--mid">
-      <h2 style="font-size:1.8rem">${j.title}</h2>
-      <div class="journal-lead">${j.lead.map((p) => `<p>${p}</p>`).join("")}</div>
-      <div style="margin-top:28px"><a href="journal.html" class="btn btn-primary">${j.addCta}</a></div>
-      ${
-        entries.length === 0
-          ? `<p class="journal-empty">${j.empty}</p>`
-          : `<div class="journal-grid">${cardsHtml}</div>`
-      }
-      <div class="journal-archive">
-        <p class="cap">${j.archiveCaption}</p>
-        <p class="explain">${j.archiveExplain}</p>
-        <a href="${copy.officialAssets.previousSeasonAlbum}" target="_blank" rel="noopener noreferrer">Xem ảnh tư liệu mùa trước ↗</a>
       </div>
     </div>
   </section>`;

@@ -102,20 +102,6 @@ export const numbers = {
   testLine: "Cùng bài. Cùng điều kiện. Lúc này mới tính chuyện nhanh hơn.",
 };
 
-export const journalSection = {
-  title: "NHỮNG NGÀY KHÔNG AI NHÌN THẤY",
-  lead: [
-    "Vạch đích sẽ có người chụp. Những ngày xây nên vạch đích thì thường không.",
-    "Giữ lại ở đây một tấm ảnh, một đoạn đường, một lần chân nặng hoặc một buổi bất ngờ thấy mình khỏe hơn. Đến cuối hành trình, những điều nhỏ đó mới là phần đáng nhớ nhất.",
-  ],
-  addCta: "Thêm một trang nhật ký",
-  uploadHint: "Kéo ảnh vào đây hoặc chọn từ thiết bị",
-  promptHints: ["Hôm nay chân thế nào?", "Điều gì khó nhất?", "Có khoảnh khắc nào muốn nhớ lại không?"],
-  empty: "Chưa có gì ở đây. Hành trình đã bắt đầu, nhưng chưa ai giữ lại một khoảnh khắc.",
-  archiveCaption: "Ảnh tư liệu · Trail Station · Núi Dinh",
-  archiveExplain: "Không khí từ những mùa trước. Hành trình của Nam Quốc và Hồng Phúc sẽ được viết tiếp tại đây.",
-};
-
 export const raceDaySection = {
   eyebrow: "DINH HARVEST FINAL 2026 · CỰ LY 10K",
   title: "NGÀY HẸN",
@@ -201,19 +187,9 @@ export const progressPage = {
   lead: "Một buổi chạy hiếm khi thay đổi được điều gì. Nhiều buổi đặt cạnh nhau thì có.",
 };
 
-export const journalPage = {
-  title: "NHỮNG NGÀY ĐÃ ĐI QUA",
-  lead: "Không chỉ có pace và kilomet. Đây là nơi giữ lại những gì các con số không kể được.",
-};
-
 export const raceInfoPage = {
   title: "TRƯỚC KHI ĐẾN NÚI DINH",
   lead: "Lịch trình, thông số, trang bị và những việc phải biết trước 07:00 ngày 27 tháng 12.",
-};
-
-export const adminPage = {
-  title: "CHỈNH LẠI HÀNH TRÌNH",
-  lead: "Thay đổi giáo án, thông tin giải và các mốc quan trọng. Mọi thay đổi phải được ghi nhận, không âm thầm viết lại quá khứ.",
 };
 
 export const finishedHero = {

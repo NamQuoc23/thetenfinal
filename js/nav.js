@@ -19,10 +19,7 @@ export function renderHeader(activePage) {
   const links = [
     ["plan.html", "Giáo án"],
     ["progress.html", "Tiến độ"],
-    ["journal.html", "Nhật ký"],
-    ["mindset.html", "Mindset"],
     ["race-info.html", "Thông tin giải"],
-    ["admin.html", "Quản trị"],
   ];
 
   const linkHtml = (extraClass) =>
@@ -35,16 +32,22 @@ export function renderHeader(activePage) {
       )
       .join("");
 
+  const mindsetHtml = (extraClass) =>
+    `<a href="mindset.html" class="mindset-brand-link ${extraClass || ""}"${
+      activePage === "mindset.html" ? ' aria-current="page"' : ""
+    }>The Champion Mindset</a>`;
+
   mount.innerHTML = `
     <div class="wrap">
       <a href="index.html" class="brand">THE FINAL TEN</a>
       <nav>${linkHtml()}</nav>
+      ${mindsetHtml()}
       <div class="header-actions">
         <a href="log.html" class="btn-log-small">Ghi kết quả</a>
         ${runner ? `<button type="button" class="whoami" id="logout-btn">${runner.short_name}</button>` : ""}
       </div>
     </div>
-    <div class="nav-mobile">${linkHtml()}</div>
+    <div class="nav-mobile">${linkHtml()}${mindsetHtml("mindset-brand-link--mobile")}</div>
   `;
 
   const logoutBtn = document.getElementById("logout-btn");
