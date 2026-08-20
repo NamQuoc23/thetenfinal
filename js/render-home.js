@@ -3,6 +3,7 @@ import * as copy from "./copy.js";
 import { requireLogin, renderHeader } from "./nav.js";
 import { formatDateVi, getWeekRange, daysUntil, weekNumberSince, parseDateStr, toDateStr, todayStr } from "./dates.js";
 import { openLightbox } from "./lightbox.js";
+import { fetchSheetPlanEntries } from "./sheet-plan.js";
 
 store.seedDemoDataIfEmpty();
 const currentId = requireLogin();
@@ -16,7 +17,21 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-function render() {
+async function loadPlanEntriesForRunner(runnerId) {
+  try {
+    const sheet = await fetchSheetPlanEntries(runnerId);
+    if (sheet.source === "sheet") return sheet.entries;
+  } catch {
+    // Sheet không đọc được — dùng dữ liệu lưu trong trình duyệt.
+  }
+  return store.getAllPlanEntries(runnerId);
+}
+
+function getPlanEntryForDate(planEntriesByRunner, runnerId, date) {
+  return planEntriesByRunner[runnerId].find((p) => p.date === date);
+}
+
+async function render() {
   const settings = store.getSettings();
   const runners = store.getRunners();
   const runnerMap = Object.fromEntries(runners.map((r) => [r.id, r]));
@@ -31,6 +46,12 @@ function render() {
     return;
   }
 
+  const [namQuocPlanEntries, hongPhucPlanEntries] = await Promise.all([
+    loadPlanEntriesForRunner("nam_quoc"),
+    loadPlanEntriesForRunner("hong_phuc"),
+  ]);
+  const planEntriesByRunner = { nam_quoc: namQuocPlanEntries, hong_phuc: hongPhucPlanEntries };
+
   const bucket = resolveTimeBucket(settings.race_datetime, store.bothFinished(), store.anyDnfOrDns());
 
   main.innerHTML =
@@ -38,8 +59,8 @@ function render() {
     renderTimeBanner(bucket) +
     renderPromise() +
     renderDualDashboard(runnerMap, settings, today) +
-    renderTodayTask(currentRunner, otherRunner, today) +
-    renderWeeklyPromises(runnerMap, settings, today) +
+    renderTodayTask(currentRunner, otherRunner, today, planEntriesByRunner) +
+    renderWeeklyPromises(runnerMap, settings, today, planEntriesByRunner) +
     renderRoad() +
     renderNumbers(runnerMap, settings, today) +
     renderJournalPreview(runnerMap) +
@@ -193,11 +214,11 @@ function renderDualDashboard(runnerMap, settings, today) {
 }
 
 // ---------- Today task ----------
-function renderTodayTask(currentRunner, otherRunner, today) {
+function renderTodayTask(currentRunner, otherRunner, today, planEntriesByRunner) {
   const t = copy.todayTask;
-  const currentPlan = store.getPlanEntry(currentRunner.id, today);
+  const currentPlan = getPlanEntryForDate(planEntriesByRunner, currentRunner.id, today);
   const currentLog = store.getWorkoutLog(currentRunner.id, today);
-  const otherPlan = store.getPlanEntry(otherRunner.id, today);
+  const otherPlan = getPlanEntryForDate(planEntriesByRunner, otherRunner.id, today);
   const otherLog = store.getWorkoutLog(otherRunner.id, today);
   const currentState = store.deriveDayState(currentPlan, currentLog);
   const otherState = store.deriveDayState(otherPlan, otherLog);
@@ -241,13 +262,13 @@ function renderTodayTask(currentRunner, otherRunner, today) {
 }
 
 // ---------- Weekly promises ----------
-function renderWeeklyPromises(runnerMap, settings, today) {
+function renderWeeklyPromises(runnerMap, settings, today, planEntriesByRunner) {
   const w = copy.weeklyPromises;
   const { start, end } = getWeekRange(today);
   const ids = ["nam_quoc", "hong_phuc"];
 
   function buildColumn(id) {
-    const plans = store.getWeekPlan(id, start, end);
+    const plans = planEntriesByRunner[id].filter((p) => p.date >= start && p.date <= end);
     const logs = store.getWorkoutLogsInRange(id, start, end);
     const planByDate = Object.fromEntries(plans.map((p) => [p.date, p]));
     const logByDate = Object.fromEntries(logs.map((l) => [l.date, l]));

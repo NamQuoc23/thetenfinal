@@ -855,11 +855,6 @@ table.metrics td:first-child, table.metrics th:first-child {
 }
 
 /* ---------- Mindset ---------- */
-.mindset-hero {
-  background:
-    linear-gradient(135deg, rgba(32, 28, 22, 0.94), rgba(124, 24, 16, 0.86)),
-    var(--ink);
-}
 .mindset-add-card,
 .mindset-empty,
 .featured-video,
