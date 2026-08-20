@@ -801,6 +801,9 @@ table.metrics td:first-child, table.metrics th:first-child {
   background: var(--forest-dark);
   color: var(--cream);
 }
+.page-hero--red {
+  background: linear-gradient(135deg, var(--race-red), var(--race-red-dark) 60%, var(--ink));
+}
 .page-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
 .page-hero p { margin-top: 12px; color: var(--cream-dim); max-width: 620px; }
 .filters {

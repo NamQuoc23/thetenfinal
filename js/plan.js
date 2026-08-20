@@ -114,7 +114,6 @@ function planDetail(p) {
   if (p.type === "rest") return p.notes || "Ngày nghỉ";
   return [
     sessionTypeLabel(p.session_type),
-    p.session_code,
     p.planned_duration_min ? `${p.planned_duration_min} phút` : null,
     p.rpe ? `RPE ${p.rpe}` : null,
     p.intensity,
@@ -125,9 +124,6 @@ function planDetail(p) {
 function sourceNote() {
   if (planError) {
     return `<p class="plan-source-note error">Không đọc được Google Sheet, đang hiển thị dữ liệu lưu trong trình duyệt. ${esc(planError)}</p>`;
-  }
-  if (planSource === "sheet") {
-    return `<p class="plan-source-note">Đang đọc giáo án từ Google Sheet.</p>`;
   }
   return "";
 }
