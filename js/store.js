@@ -20,6 +20,7 @@ function defaultData() {
       race_location: "Hồ Bên Suối, Núi Dinh",
       race_cutoff_hours: "5",
       event_start_date: "2026-08-19",
+      plan_sheet_url: "",
     },
     planEntries: [], // { id, runner_id, date, week_number, type: 'workout'|'rest', workout_name, planned_distance_km, planned_duration_min, intensity, notes }
     workoutLogs: [], // { id, plan_entry_id, runner_id, date, status: 'completed'|'adjusted'|'recovery', planned_summary, actual_summary, distance_km, duration_min, avg_pace, avg_hr, rpe, pain_level, pain_location, notes, activity_link, photo_path, is_test }

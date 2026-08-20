@@ -2,8 +2,12 @@ import * as store from "./store.js";
 import { planPage, weeklyPromises } from "./copy.js";
 import { requireLogin, renderHeader } from "./nav.js";
 import { todayStr, formatDateVi, getWeekRange, addDays } from "./dates.js";
+import { fetchSheetPlanEntries, getPlanSheetUrl } from "./sheet-plan.js";
 
 let activeFilter = 0;
+let planEntries = [];
+let planSource = "local";
+let planError = "";
 
 store.seedDemoDataIfEmpty();
 const currentId = requireLogin();
@@ -34,12 +38,35 @@ function init() {
     });
   });
 
+  loadPlanEntries();
+}
+
+async function loadPlanEntries() {
+  const listEl = document.getElementById("plan-list");
+  listEl.innerHTML = `<p class="dim" style="font-style:italic">Đang tải giáo án...</p>`;
+
+  planError = "";
+  planSource = getPlanSheetUrl() ? "sheet" : "local";
+
+  try {
+    const sheet = await fetchSheetPlanEntries();
+    if (sheet.source === "sheet") {
+      planEntries = sheet.entries.filter((p) => p.runner_id === currentId);
+    } else {
+      planEntries = store.getAllPlanEntries(currentId);
+    }
+  } catch (error) {
+    planError = error.message || "Không đọc được Google Sheet.";
+    planSource = "fallback";
+    planEntries = store.getAllPlanEntries(currentId);
+  }
+
   renderList();
 }
 
 function renderList() {
   const today = todayStr();
-  let entries = store.getAllPlanEntries(currentId);
+  let entries = [...planEntries];
 
   if (activeFilter === 0) {
     const { start, end } = getWeekRange(today);
@@ -52,11 +79,11 @@ function renderList() {
 
   const listEl = document.getElementById("plan-list");
   if (entries.length === 0) {
-    listEl.innerHTML = `<p class="dim" style="font-style:italic">Chưa có bài nào trong khoảng này.</p>`;
+    listEl.innerHTML = `${sourceNote()}<p class="dim" style="font-style:italic">Chưa có bài nào trong khoảng này.</p>`;
     return;
   }
 
-  listEl.innerHTML = entries
+  listEl.innerHTML = sourceNote() + entries
     .map((p) => {
       const log = store.getWorkoutLog(currentId, p.date);
       const status = store.deriveDayStatus(p, log, p.date, today);
@@ -77,4 +104,14 @@ function renderList() {
         </div>`;
     })
     .join("");
+}
+
+function sourceNote() {
+  if (planError) {
+    return `<p class="plan-source-note error">Không đọc được Google Sheet, đang hiển thị dữ liệu lưu trong trình duyệt. ${esc(planError)}</p>`;
+  }
+  if (planSource === "sheet") {
+    return `<p class="plan-source-note">Đang đọc giáo án từ Google Sheet.</p>`;
+  }
+  return "";
 }

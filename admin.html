@@ -41,6 +41,19 @@
         </div>
 
         <div class="admin-section">
+          <h2>Nguồn giáo án Google Sheet</h2>
+          <p class="admin-help">Dán link Google Sheet public/published CSV. Nếu để trống, trang Giáo án dùng dữ liệu lưu trong trình duyệt như hiện tại.</p>
+          <form id="sheet-source-form">
+            <div class="form-field">
+              <label>Google Sheet URL</label>
+              <input type="url" id="s-plan-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../edit?gid=0" />
+              <p class="hint">Sheet nên có các cột: date, runner_id, type, workout_name, planned_distance_km, planned_duration_min, intensity, notes.</p>
+            </div>
+            <button type="submit" class="btn-small save">Lưu nguồn giáo án</button>
+          </form>
+        </div>
+
+        <div class="admin-section">
           <h2>Thêm / sửa bài tập trong giáo án</h2>
           <form id="plan-form">
             <div class="admin-row">

@@ -20,6 +20,7 @@ function init() {
   document.getElementById("page-lead").textContent = adminPage.lead;
 
   initSettings();
+  initSheetSource();
   initPlanForm();
   initMilestones();
   initResults();
@@ -48,6 +49,20 @@ function initSettings() {
       event_start_date: document.getElementById("s-start").value,
     });
     alert("Đã lưu thông tin giải.");
+  });
+}
+
+function initSheetSource() {
+  const input = document.getElementById("s-plan-sheet-url");
+  if (!input) return;
+
+  input.value = store.getSettings().plan_sheet_url || "";
+  document.getElementById("sheet-source-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    store.updateSettings({
+      plan_sheet_url: input.value.trim(),
+    });
+    alert("Đã lưu nguồn giáo án Google Sheet.");
   });
 }
 

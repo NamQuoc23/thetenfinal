@@ -841,6 +841,14 @@ table.metrics td:first-child, table.metrics th:first-child {
 .plan-day .info { flex: 1; min-width: 180px; }
 .plan-day .name { font-weight: 700; }
 .plan-day .detail { font-size: 13px; color: var(--earth); margin-top: 2px; }
+.plan-source-note {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--earth);
+}
+.plan-source-note.error {
+  color: var(--race-red-dark);
+}
 
 /* ---------- Mindset ---------- */
 .mindset-hero {
@@ -1080,6 +1088,11 @@ table.metrics td:first-child, table.metrics th:first-child {
   margin-bottom: 28px;
 }
 .admin-section h2 { font-size: 1.05rem; margin-bottom: 16px; }
+.admin-help {
+  margin: -8px 0 18px;
+  font-size: 13px;
+  color: var(--earth);
+}
 .admin-row {
   display: flex;
   gap: 12px;
