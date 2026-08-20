@@ -53,14 +53,18 @@ function initSettings() {
 }
 
 function initSheetSource() {
-  const input = document.getElementById("s-plan-sheet-url");
-  if (!input) return;
+  const namQuocInput = document.getElementById("s-nam-quoc-plan-sheet-url");
+  const hongPhucInput = document.getElementById("s-hong-phuc-plan-sheet-url");
+  if (!namQuocInput || !hongPhucInput) return;
 
-  input.value = store.getSettings().plan_sheet_url || "";
+  const settings = store.getSettings();
+  namQuocInput.value = settings.nam_quoc_plan_sheet_url || "";
+  hongPhucInput.value = settings.hong_phuc_plan_sheet_url || "";
   document.getElementById("sheet-source-form").addEventListener("submit", (e) => {
     e.preventDefault();
     store.updateSettings({
-      plan_sheet_url: input.value.trim(),
+      nam_quoc_plan_sheet_url: namQuocInput.value.trim(),
+      hong_phuc_plan_sheet_url: hongPhucInput.value.trim(),
     });
     alert("Đã lưu nguồn giáo án Google Sheet.");
   });

@@ -45,9 +45,13 @@
           <p class="admin-help">Dán link Google Sheet public/published CSV. Nếu để trống, trang Giáo án dùng dữ liệu lưu trong trình duyệt như hiện tại.</p>
           <form id="sheet-source-form">
             <div class="form-field">
-              <label>Google Sheet URL</label>
-              <input type="url" id="s-plan-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../edit?gid=0" />
-              <p class="hint">Sheet nên có các cột: date, runner_id, type, workout_name, planned_distance_km, planned_duration_min, intensity, notes.</p>
+              <label>Google Sheet giáo án Nam Quốc</label>
+              <input type="url" id="s-nam-quoc-plan-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../edit?gid=0" />
+            </div>
+            <div class="form-field">
+              <label>Google Sheet giáo án Hồng Phúc</label>
+              <input type="url" id="s-hong-phuc-plan-sheet-url" placeholder="https://docs.google.com/spreadsheets/d/.../edit?gid=0" />
+              <p class="hint">Sheet nên có các cột: week, date, day, session_type, session_code, workout_name, planned_duration_min, rpe, notes.</p>
             </div>
             <button type="submit" class="btn-small save">Lưu nguồn giáo án</button>
           </form>

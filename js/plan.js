@@ -46,12 +46,12 @@ async function loadPlanEntries() {
   listEl.innerHTML = `<p class="dim" style="font-style:italic">Đang tải giáo án...</p>`;
 
   planError = "";
-  planSource = getPlanSheetUrl() ? "sheet" : "local";
+  planSource = getPlanSheetUrl(currentId) ? "sheet" : "local";
 
   try {
-    const sheet = await fetchSheetPlanEntries();
+    const sheet = await fetchSheetPlanEntries(currentId);
     if (sheet.source === "sheet") {
-      planEntries = sheet.entries.filter((p) => p.runner_id === currentId);
+      planEntries = sheet.entries;
     } else {
       planEntries = store.getAllPlanEntries(currentId);
     }
@@ -87,23 +87,39 @@ function renderList() {
     .map((p) => {
       const log = store.getWorkoutLog(currentId, p.date);
       const status = store.deriveDayStatus(p, log, p.date, today);
-      const detail =
-        p.type === "rest"
-          ? "Ngày nghỉ"
-          : [p.workout_name, p.planned_distance_km ? `${p.planned_distance_km} km` : null, p.planned_duration_min ? `${p.planned_duration_min} phút` : null, p.intensity]
-              .filter(Boolean)
-              .join(" · ");
+      const detail = planDetail(p);
       return `
         <div class="plan-day">
-          <span class="date-col">${formatDateVi(p.date)}</span>
+          <span class="date-col">${esc([p.day_label, formatDateVi(p.date)].filter(Boolean).join(" · "))}</span>
           <div class="info">
             <p class="name">${esc(p.type === "rest" ? "Nghỉ" : p.workout_name || "Bài tập")}</p>
             <p class="detail">${esc(detail)}</p>
+            ${p.notes ? `<p class="detail note">${esc(p.notes)}</p>` : ""}
           </div>
           <span class="status-pill status-${status}">${weeklyPromises.statusLabels[status]}</span>
         </div>`;
     })
     .join("");
+}
+
+function sessionTypeLabel(type) {
+  if (type === "run") return "Chạy";
+  if (type === "strength") return "Sức mạnh";
+  if (type === "plyometric") return "Plyometric";
+  if (type === "rest") return "Nghỉ";
+  return "Bài tập";
+}
+
+function planDetail(p) {
+  if (p.type === "rest") return p.notes || "Ngày nghỉ";
+  return [
+    sessionTypeLabel(p.session_type),
+    p.session_code,
+    p.planned_duration_min ? `${p.planned_duration_min} phút` : null,
+    p.rpe ? `RPE ${p.rpe}` : null,
+    p.intensity,
+    p.details,
+  ].filter(Boolean).join(" · ");
 }
 
 function sourceNote() {

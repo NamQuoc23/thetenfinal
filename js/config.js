@@ -1,5 +1,11 @@
 export const config = {
-  // Dán link Google Sheet public/published CSV vào đây nếu muốn mọi người cùng đọc một nguồn giáo án.
-  // Trang Quản trị vẫn có thể override tạm thời trên từng trình duyệt.
+  // Link cũ một sheet chung, giữ lại để tương thích.
   planSheetUrl: "",
+
+  // Mỗi người một Google Sheet/tab riêng.
+  // Trang Giáo án sẽ tự đọc link theo người đang đăng nhập.
+  planSheetUrls: {
+    nam_quoc: "",
+    hong_phuc: "https://docs.google.com/spreadsheets/d/1qVwKdS2byPYF2P3Z7sUdBTxVSnNXLomIJTU2x5Oo5eU/edit?gid=1193277276#gid=1193277276",
+  },
 };

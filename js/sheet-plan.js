@@ -2,8 +2,6 @@ import { getSettings } from "./store.js";
 import { weekNumberSince } from "./dates.js";
 import { config } from "./config.js";
 
-const RUNNER_IDS = ["nam_quoc", "hong_phuc"];
-
 function normalize(value) {
   return String(value || "")
     .trim()
@@ -74,6 +72,12 @@ function parseDate(value) {
   const raw = String(value || "").trim();
   if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
 
+  const yearFirst = raw.match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/);
+  if (yearFirst) {
+    const [, year, month, day] = yearFirst;
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+
   const slash = raw.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
   if (slash) {
     const [, day, month, year] = slash;
@@ -90,55 +94,58 @@ function parseNumber(value) {
   return normalized ? Number(normalized[0]) : null;
 }
 
-function runnerIdsFrom(value) {
+function canonicalSessionType(value) {
   const raw = normalize(value);
-  if (!raw || raw === "both" || raw === "all" || raw === "ca_hai" || raw === "2_nguoi") {
-    return RUNNER_IDS;
-  }
-  if (raw.includes("nam") || raw.includes("quoc")) return ["nam_quoc"];
-  if (raw.includes("hong") || raw.includes("phuc")) return ["hong_phuc"];
-  if (RUNNER_IDS.includes(raw)) return [raw];
-  return RUNNER_IDS;
+  if (raw.includes("rest") || raw.includes("nghi") || raw.includes("off")) return "rest";
+  if (raw.includes("strength") || raw.includes("gym") || raw.includes("suc_manh")) return "strength";
+  if (raw.includes("plyo") || raw.includes("plyometric") || raw.includes("nhay")) return "plyometric";
+  if (raw.includes("run") || raw.includes("chay")) return "run";
+  return "run";
 }
 
-function toPlanEntries(rows) {
+function toPlanEntries(rows, runnerId) {
   if (rows.length < 2) return [];
   const headers = rows[0].map(normalize);
   const settings = getSettings();
 
-  return rows.slice(1).flatMap((values, index) => {
+  return rows.slice(1).map((values, index) => {
     const row = Object.fromEntries(headers.map((header, i) => [header, values[i] || ""]));
     const date = parseDate(pick(row, ["date", "ngay", "ngay_tap"]));
-    if (!date) return [];
+    if (!date) return null;
 
-    const typeRaw = normalize(pick(row, ["type", "loai", "loai_bai", "nghi_tap"]));
+    const sessionType = canonicalSessionType(pick(row, ["session_type", "type", "loai", "loai_bai"]));
     const workoutName = pick(row, ["workout_name", "workout", "bai", "ten_bai", "noi_dung", "noi_dung_bai"]);
-    const type = typeRaw.includes("rest") || typeRaw.includes("nghi") || typeRaw.includes("off")
-      ? "rest"
-      : "workout";
-    const runnerIds = runnerIdsFrom(pick(row, ["runner_id", "runner", "person", "nguoi", "ten", "van_dong_vien"]));
-
-    return runnerIds.map((runnerId) => ({
+    return {
       id: `sheet-${date}-${runnerId}-${index}`,
       runner_id: runnerId,
       date,
-      week_number: weekNumberSince(settings.event_start_date, date),
-      type,
-      workout_name: type === "rest" ? null : (workoutName || "Bài tập"),
-      planned_distance_km: parseNumber(pick(row, ["planned_distance_km", "distance", "km", "quang_duong", "cu_ly"])),
+      week_number: parseNumber(pick(row, ["week", "tuan"])) || weekNumberSince(settings.event_start_date, date),
+      day_label: pick(row, ["day", "thu"]),
+      type: sessionType === "rest" ? "rest" : "workout",
+      session_type: sessionType,
+      session_code: pick(row, ["session_code", "code", "ma_bai"]) || null,
+      workout_name: sessionType === "rest" ? null : (workoutName || "Bài tập"),
+      planned_distance_km: null,
       planned_duration_min: parseNumber(pick(row, ["planned_duration_min", "duration", "min", "phut", "thoi_luong"])),
       intensity: pick(row, ["intensity", "cuong_do", "zone", "pace"]) || null,
+      rpe: parseNumber(pick(row, ["rpe", "do_kho"])),
+      details: pick(row, ["details", "detail", "noi_dung", "bai_tap", "drills"]),
       notes: pick(row, ["notes", "note", "ghi_chu", "luu_y"]) || null,
-    }));
-  });
+    };
+  }).filter(Boolean);
 }
 
-export function getPlanSheetUrl() {
-  return getSettings().plan_sheet_url || config.planSheetUrl || "";
+export function getPlanSheetUrl(runnerId) {
+  const settings = getSettings();
+  return settings[`${runnerId}_plan_sheet_url`] ||
+    settings.plan_sheet_url ||
+    config.planSheetUrls?.[runnerId] ||
+    config.planSheetUrl ||
+    "";
 }
 
-export async function fetchSheetPlanEntries() {
-  const url = csvUrl(getPlanSheetUrl());
+export async function fetchSheetPlanEntries(runnerId) {
+  const url = csvUrl(getPlanSheetUrl(runnerId));
   if (!url) return { source: "local", entries: [] };
 
   const response = await fetch(url, { cache: "no-store" });
@@ -147,6 +154,6 @@ export async function fetchSheetPlanEntries() {
   }
 
   const text = await response.text();
-  const entries = toPlanEntries(parseCsv(text));
+  const entries = toPlanEntries(parseCsv(text), runnerId);
   return { source: "sheet", entries };
 }

@@ -841,6 +841,7 @@ table.metrics td:first-child, table.metrics th:first-child {
 .plan-day .info { flex: 1; min-width: 180px; }
 .plan-day .name { font-weight: 700; }
 .plan-day .detail { font-size: 13px; color: var(--earth); margin-top: 2px; }
+.plan-day .detail.note { color: var(--earth-light); }
 .plan-source-note {
   margin: 0 0 16px;
   font-size: 13px;
